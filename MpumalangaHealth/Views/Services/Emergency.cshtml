@@ -1,0 +1,194 @@
+﻿@{
+    ViewData["Title"] = "Emergency Services";
+}
+
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Services")">Our Services</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Emergency Services</li>
+        </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-primary mb-3">Emergency Services</h1>
+            <p class="lead text-muted">24/7 emergency medical care when you need it most</p>
+        </div>
+    </div>
+
+    <!-- Emergency Alert -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="alert alert-danger text-center py-4">
+                <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                <h2 class="alert-heading">Medical Emergency?</h2>
+                <h1 class="display-4 fw-bold my-4">CALL 10177</h1>
+                <p class="lead mb-0">Emergency ambulance services available 24 hours a day, 7 days a week</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Services Grid -->
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="card emergency-service-card h-100 text-center">
+                <div class="card-body p-4">
+                    <i class="fas fa-ambulance fa-3x text-primary mb-3"></i>
+                    <h4 class="text-primary">Ambulance Services</h4>
+                    <p class="text-muted">Emergency medical transportation with trained paramedics</p>
+                    <div class="emergency-contact">
+                        <h5 class="text-danger">10177</h5>
+                        <small class="text-muted">Toll-free emergency line</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card emergency-service-card h-100 text-center">
+                <div class="card-body p-4">
+                    <i class="fas fa-hospital fa-3x text-primary mb-3"></i>
+                    <h4 class="text-primary">Emergency Departments</h4>
+                    <p class="text-muted">24/7 emergency care at all provincial hospitals</p>
+                    <div class="emergency-contact">
+                        <h5 class="text-danger">112</h5>
+                        <small class="text-muted">Mobile emergency number</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card emergency-service-card h-100 text-center">
+                <div class="card-body p-4">
+                    <i class="fas fa-first-aid fa-3x text-primary mb-3"></i>
+                    <h4 class="text-primary">Trauma Care</h4>
+                    <p class="text-muted">Specialized trauma and critical care services</p>
+                    <div class="emergency-contact">
+                        <h5 class="text-danger">013 766 3350</h5>
+                        <small class="text-muted">Emergency unit contact</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- When to Seek Emergency Care -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-exclamation-circle me-2"></i>When to Seek Emergency Care
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Life-Threatening Conditions:</h6>
+                            <ul class="text-muted">
+                                <li>Chest pain or difficulty breathing</li>
+                                <li>Severe bleeding that won't stop</li>
+                                <li>Loss of consciousness</li>
+                                <li>Severe burns</li>
+                                <li>Stroke symptoms (face drooping, arm weakness, speech difficulty)</li>
+                                <li>Severe allergic reactions</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Other Emergency Situations:</h6>
+                            <ul class="text-muted">
+                                <li>Broken bones or major injuries</li>
+                                <li>Severe abdominal pain</li>
+                                <li>Poisoning or overdose</li>
+                                <li>Seizures</li>
+                                <li>High fever with rash</li>
+                                <li>Suicidal or homicidal thoughts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Preparedness -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-warning">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-lightbulb me-2"></i>Emergency Preparedness Tips
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="text-muted">
+                        <li>Keep emergency numbers saved in your phone</li>
+                        <li>Know the location of your nearest hospital</li>
+                        <li>Keep a list of your medications and allergies</li>
+                        <li>Have your ID and medical aid information ready</li>
+                        <li>Learn basic first aid and CPR</li>
+                        <li>Keep emergency supplies at home</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-info text-dark">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-phone-alt me-2"></i>Other Important Contacts
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="contact-list">
+                        <div class="contact-item mb-3">
+                            <strong>Poison Information</strong>
+                            <div>0861 555 777</div>
+                        </div>
+                        <div class="contact-item mb-3">
+                            <strong>Mental Health Crisis</strong>
+                            <div>0800 567 567</div>
+                        </div>
+                        <div class="contact-item mb-3">
+                            <strong>Child Protection</strong>
+                            <div>0800 055 555</div>
+                        </div>
+                        <div class="contact-item">
+                            <strong>Gender-Based Violence</strong>
+                            <div>0800 428 428</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .emergency-service-card {
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .emergency-service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+            border: 2px solid var(--primary-blue);
+        }
+
+    .emergency-contact h5 {
+        font-weight: bold;
+    }
+
+    .contact-item {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .contact-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+</style>

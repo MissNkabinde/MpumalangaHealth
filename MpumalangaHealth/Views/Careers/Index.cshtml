@@ -1,0 +1,184 @@
+﻿@model List<JobVacancy>
+@{
+    ViewData["Title"] = "Career Opportunities";
+}
+
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-primary mb-3">Career Opportunities</h1>
+            <p class="lead text-muted">Join our dedicated healthcare team and make a difference in your community</p>
+        </div>
+    </div>
+
+    <!-- Featured Jobs Banner -->
+    @if (Model.Any(j => j.IsFeatured))
+    {
+        <div class="alert alert-primary mb-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-star fa-2x me-3"></i>
+                <div>
+                    <h5 class="alert-heading mb-1">Featured Opportunities</h5>
+                    <p class="mb-0">Urgently needed positions - apply today!</p>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Jobs Counter -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="text-primary">Current Vacancies (@Model.Count)</h4>
+                <div class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Applications close as indicated
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs Grid -->
+    <div class="row">
+        @foreach (var job in Model)
+        {
+            <div class="col-lg-6 mb-4">
+                <div class="card job-card h-100 shadow-sm @(job.IsFeatured ? "border-primary" : "")">
+                    @if (job.IsFeatured)
+                    {
+                        <div class="card-header bg-primary text-white py-2">
+                            <small><i class="fas fa-star me-1"></i>FEATURED POSITION</small>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <!-- Job Header -->
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title text-primary mb-0">@job.Title</h5>
+                            <span class="badge bg-warning text-dark">@job.EmploymentType</span>
+                        </div>
+
+                        <!-- Job Details -->
+                        <div class="job-meta mb-3">
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-building me-1"></i>@job.Department
+                                </small>
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>@job.Location
+                                </small>
+                                <small class="text-muted">
+                                    <i class="fas fa-money-bill-wave me-1"></i>@job.SalaryRange
+                                </small>
+                            </div>
+                            <small class="text-muted">
+                                <i class="fas fa-hashtag me-1"></i>Ref: @job.ReferenceNumber
+                            </small>
+                        </div>
+
+                        <!-- Job Description -->
+                        <p class="card-text text-muted mb-3">@job.Description</p>
+
+                        <!-- Closing Date & Actions -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                @if (job.ClosingDate.Date == DateTime.Now.Date)
+                                {
+                                    <small class="text-danger">
+                                        <i class="fas fa-clock me-1"></i>Closes today!
+                                    </small>
+                                }
+                                else if (job.ClosingDate.Date <= DateTime.Now.AddDays(7).Date)
+                                {
+                                    <small class="text-warning">
+                                        <i class="fas fa-clock me-1"></i>Closes in @((job.ClosingDate - DateTime.Now).Days) days
+                                    </small>
+                                }
+                                else
+                                {
+                                    <small class="text-muted">
+                                        <i class="fas fa-clock me-1"></i>Closes @job.ClosingDate.ToString("MMM dd, yyyy")
+                                    </small>
+                                }
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="@Url.Action("Details", new { id = job.Id })" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </a>
+                                <a href="@Url.Action("Application", new { id = job.Id })" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-paper-plane me-1"></i>Apply
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- No Jobs Message -->
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-briefcase fa-3x text-muted mb-3"></i>
+            <h4 class="text-muted">No current vacancies</h4>
+            <p class="text-muted">Please check back later for new opportunities</p>
+            <div class="mt-4">
+                <p class="text-muted">You can also:</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" class="btn btn-outline-primary">Submit General Application</a>
+                    <a href="#" class="btn btn-outline-secondary">Join Talent Pool</a>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Application Info -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="fas fa-info-circle me-2"></i>Application Information
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Required Documents:</h6>
+                            <ul class="small">
+                                <li>Comprehensive CV</li>
+                                <li>Certified copies of qualifications</li>
+                                <li>Certified ID copy</li>
+                                <li>Proof of registration with relevant council</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Application Process:</h6>
+                            <ul class="small">
+                                <li>Complete the online application form</li>
+                                <li>Attach all required documents</li>
+                                <li>Submit before closing date</li>
+                                <li>Only shortlisted candidates will be contacted</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Highlight jobs closing soon
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobCards = document.querySelectorAll('.job-card');
+
+            jobCards.forEach(card => {
+                const closingText = card.querySelector('.text-warning, .text-danger');
+                if (closingText) {
+                    card.style.borderLeft = '4px solid var(--mustard)';
+                }
+            });
+        });
+    </script>
+}

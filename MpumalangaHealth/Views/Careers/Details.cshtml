@@ -1,0 +1,121 @@
+﻿@model JobVacancy
+@{
+    ViewData["Title"] = Model.Title + " - Career Opportunity";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Back Button -->
+            <div class="mb-4">
+                <a href="@Url.Action("Index")" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Vacancies
+                </a>
+            </div>
+
+            <!-- Job Details Card -->
+            <div class="card shadow-sm">
+                @if (Model.IsFeatured)
+                {
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-star me-1"></i>FEATURED POSITION</span>
+                            <small>Ref: @Model.ReferenceNumber</small>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-header bg-light">
+                        <small class="text-muted">Reference: @Model.ReferenceNumber</small>
+                    </div>
+                }
+
+                <div class="card-body p-4">
+                    <!-- Job Header -->
+                    <div class="text-center mb-4">
+                        <h1 class="h2 text-primary mb-3">@Model.Title</h1>
+                        <div class="d-flex flex-wrap justify-content-center gap-3 mb-3">
+                            <span class="badge bg-primary">@Model.Department</span>
+                            <span class="badge bg-warning text-dark">@Model.EmploymentType</span>
+                            <span class="badge bg-secondary">@Model.Location</span>
+                        </div>
+                        <p class="lead text-muted">@Model.Description</p>
+                    </div>
+
+                    <!-- Key Information -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="info-item mb-3">
+                                <strong><i class="fas fa-money-bill-wave text-primary me-2"></i>Salary Range:</strong>
+                                <span class="ms-2">@Model.SalaryRange</span>
+                            </div>
+                            <div class="info-item mb-3">
+                                <strong><i class="fas fa-map-marker-alt text-primary me-2"></i>Location:</strong>
+                                <span class="ms-2">@Model.Location</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item mb-3">
+                                <strong><i class="fas fa-clock text-primary me-2"></i>Closing Date:</strong>
+                                <span class="ms-2 @(Model.ClosingDate.Date <= DateTime.Now.AddDays(7).Date ? "text-warning fw-bold" : "")">
+                                    @Model.ClosingDate.ToString("MMMM dd, yyyy")
+                                </span>
+                            </div>
+                            <div class="info-item mb-3">
+                                <strong><i class="fas fa-calendar text-primary me-2"></i>Posted:</strong>
+                                <span class="ms-2">@Model.PostedDate.ToString("MMMM dd, yyyy")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Requirements -->
+                    <div class="mb-4">
+                        <h4 class="text-primary mb-3">
+                            <i class="fas fa-list-check me-2"></i>Requirements
+                        </h4>
+                        <div class="bg-light p-3 rounded">
+                            @Html.Raw(Model.Requirements.Replace("\n", "<br>"))
+                        </div>
+                    </div>
+
+                    <!-- Responsibilities -->
+                    <div class="mb-4">
+                        <h4 class="text-primary mb-3">
+                            <i class="fas fa-tasks me-2"></i>Key Responsibilities
+                        </h4>
+                        <div class="bg-light p-3 rounded">
+                            @Html.Raw(Model.Responsibilities.Replace("\n", "<br>"))
+                        </div>
+                    </div>
+
+                    <!-- Application CTA -->
+                    <div class="text-center mt-5 pt-4 border-top">
+                        <div class="mb-4">
+                            <h4 class="text-primary">Ready to Apply?</h4>
+                            <p class="text-muted">Submit your application before the closing date</p>
+                        </div>
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="@Url.Action("Application", new { id = Model.Id })" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </a>
+                            <a href="@Url.Action("Index")" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-briefcase me-2"></i>View Other Jobs
+                            </a>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <i class="fas fa-clock me-1"></i>
+                            Applications close @Model.ClosingDate.ToString("MMMM dd, yyyy 'at' 23:59")
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .info-item {
+        padding: 0.5rem 0;
+    }
+</style>

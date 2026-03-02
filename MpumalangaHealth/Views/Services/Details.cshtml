@@ -1,0 +1,162 @@
+﻿@model HealthService
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Services")">Our Services</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Category", new { category = Model.Category })">@Model.Category</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Service Header -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <div class="service-icon-large me-4">
+                            <i class="@Model.Icon fa-3x text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h1 class="display-6 text-primary mb-2">@Model.Name</h1>
+                            <p class="lead text-muted mb-3">@Model.Description</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-primary">@Model.Category</span>
+                                @if (Model.IsFeatured)
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-star me-1"></i>Key Service
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Description -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0 text-primary">
+                        <i class="fas fa-file-alt me-2"></i>Service Overview
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">@Model.DetailedDescription</p>
+                </div>
+            </div>
+
+            <!-- Services Included -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0 text-primary">
+                        <i class="fas fa-list-check me-2"></i>Services Included
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var service in Model.ServicesIncluded)
+                        {
+                            <div class="col-md-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-3"></i>
+                                    <span class="text-muted">@service</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Service Information Sidebar -->
+            <div class="card shadow-sm sticky-top" style="top: 100px;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Service Information
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Target Audience -->
+                    <div class="info-item mb-3">
+                        <h6 class="text-primary">
+                            <i class="fas fa-users me-2"></i>Target Audience
+                        </h6>
+                        <p class="text-muted small mb-0">@Model.TargetAudience</p>
+                    </div>
+
+                    <!-- Eligibility -->
+                    <div class="info-item mb-3">
+                        <h6 class="text-primary">
+                            <i class="fas fa-clipboard-check me-2"></i>Eligibility
+                        </h6>
+                        <p class="text-muted small mb-0">@Model.Eligibility</p>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="info-item mb-3">
+                        <h6 class="text-primary">
+                            <i class="fas fa-phone me-2"></i>Contact Department
+                        </h6>
+                        <p class="text-muted small mb-0">@Model.ContactDepartment</p>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-4">
+                        <a href="@Url.Action("Category", new { category = Model.Category })" class="btn btn-outline-primary w-100 mb-2">
+                            <i class="fas fa-arrow-left me-2"></i>Back to @Model.Category
+                        </a>
+                        <a href="@Url.Action("Index", "Facilities")" class="btn btn-primary w-100">
+                            <i class="fas fa-hospital me-2"></i>Find a Facility
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency Contact -->
+            <div class="card bg-danger text-white mt-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-ambulance fa-2x mb-3"></i>
+                    <h6>Medical Emergency?</h6>
+                    <p class="small mb-2">Call immediately</p>
+                    <h4 class="fw-bold">10177</h4>
+                    <small>or visit nearest emergency department</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .service-icon-large {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(1, 71, 171, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid var(--primary-blue);
+    }
+
+    .info-item {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .info-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+    .sticky-top {
+        position: sticky;
+        z-index: 100;
+    }
+</style>

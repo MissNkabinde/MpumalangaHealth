@@ -1,0 +1,315 @@
+﻿@model Tender
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="tender-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Index", "Home")">
+                    <i class="fas fa-home me-1"></i>Home
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Index")">Tenders</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                @Model.TenderNumber
+            </li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="tender-detail-header">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="tender-status
+                        @(Model.Status == "Open" ? "tender-status-open" :
+                                                    Model.Status == "Closing Soon" ? "tender-status-closing" :
+                                                    "tender-status-closed")">
+                        @if (Model.Status == "Closing Soon")
+                        {
+                            <i class="fas fa-clock"></i>
+                        }
+                        else if (Model.Status == "Open")
+                        {
+                            <i class="fas fa-check-circle"></i>
+                        }
+                        @Model.Status
+                    </span>
+                    <span class="tender-number">
+                        <i class="fas fa-hashtag"></i>@Model.TenderNumber
+                    </span>
+                    @if (Model.IsOpen && Model.DaysRemaining <= 7)
+                    {
+                        <span class="featured-badge" style="background: rgba(220,53,69,0.1); color: #dc3545; border-color: rgba(220,53,69,0.2);">
+                            <i class="fas fa-exclamation-triangle"></i>@Model.DaysRemaining days left
+                        </span>
+                    }
+                </div>
+
+                <h1 class="tender-detail-title">@Model.Title</h1>
+
+                <div class="tender-detail-meta-grid">
+                    <div class="tender-detail-meta-item">
+                        <div class="tender-detail-meta-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div>
+                            <div class="tender-detail-meta-label">Department</div>
+                            <div class="tender-detail-meta-value">@Model.Department</div>
+                        </div>
+                    </div>
+                    <div class="tender-detail-meta-item">
+                        <div class="tender-detail-meta-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div>
+                            <div class="tender-detail-meta-label">Category</div>
+                            <div class="tender-detail-meta-value">@Model.Category</div>
+                        </div>
+                    </div>
+                    <div class="tender-detail-meta-item">
+                        <div class="tender-detail-meta-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div>
+                            <div class="tender-detail-meta-label">Published</div>
+                            <div class="tender-detail-meta-value">@Model.PublishedDate.ToString("dd MMM yyyy")</div>
+                        </div>
+                    </div>
+                    <div class="tender-detail-meta-item">
+                        <div class="tender-detail-meta-icon">
+                            <i class="fas fa-calendar-times"></i>
+                        </div>
+                        <div>
+                            <div class="tender-detail-meta-label">Closing Date</div>
+                            <div class="tender-detail-meta-value @(Model.DaysRemaining <= 7 && Model.IsOpen ? "text-danger" : "")">
+                                @Model.ClosingDate.ToString("dd MMM yyyy HH:mm")
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Budget.HasValue)
+                    {
+                        <div class="tender-detail-meta-item">
+                            <div class="tender-detail-meta-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div>
+                                <div class="tender-detail-meta-label">Budget</div>
+                                <div class="tender-detail-meta-value" style="color: var(--primary-green); font-weight: 800;">
+                                    R @Model.Budget.Value.ToString("N2")
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="tender-section">
+                <h5 class="tender-section-title">
+                    <i class="fas fa-align-left"></i>
+                    Tender Description
+                </h5>
+                <div style="white-space: pre-line; line-height: 1.8; color: #4a5568;">
+                    @Model.Description
+                </div>
+            </div>
+
+            <!-- Documents -->
+            @if (!string.IsNullOrEmpty(Model.DocumentUrl))
+            {
+                <div class="tender-section">
+                    <h5 class="tender-section-title">
+                        <i class="fas fa-file-pdf"></i>
+                        Tender Documents
+                    </h5>
+                    <div class="document-card">
+                        <div class="document-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold mb-1" style="color: var(--dark-gray);">Tender Document Package</h6>
+                            <p class="text-secondary small mb-2">
+                                Complete tender documentation including specifications, terms, and conditions.
+                            </p>
+                            @if (Model.IsOpen)
+                            {
+                                <a href="@Url.Action("DownloadDocument", new { id = Model.Id })"
+                                   class="tender-btn tender-btn-primary tender-btn-sm mt-2">
+                                    <i class="fas fa-download me-2"></i>Download Documents
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-secondary">
+                                    <i class="fas fa-lock me-2"></i>Documents unavailable for closed tenders
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Action -->
+            @if (Model.IsOpen)
+            {
+                <div class="tender-section" style="background: rgba(8, 160, 69, 0.02); border: 1px solid rgba(8, 160, 69, 0.1);">
+                    <div class="text-center">
+                        <i class="fas fa-gavel fa-2x" style="color: var(--primary-green); margin-bottom: 1rem;"></i>
+                        <h5 class="fw-bold mb-2" style="color: var(--dark-gray);">Ready to Submit a Bid?</h5>
+                        <p class="text-secondary mb-4">
+                            Download the tender documents and submit your proposal before
+                            <span class="fw-bold" style="color: var(--primary-green);">@Model.ClosingDate.ToString("dd MMMM yyyy 'at' HH:mm")</span>
+                        </p>
+                        <div class="d-flex justify-content-center gap-3">
+                            @if (!string.IsNullOrEmpty(Model.DocumentUrl))
+                            {
+                                <a href="@Url.Action("DownloadDocument", new { id = Model.Id })"
+                                   class="tender-btn tender-btn-primary">
+                                    <i class="fas fa-download me-2"></i>Download Documents
+                                </a>
+                            }
+                            <a href="@Url.Action("Index")" class="tender-btn tender-btn-outline">
+                                <i class="fas fa-file-contract me-2"></i>Browse All Tenders
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="tender-section" style="background: rgba(108, 117, 125, 0.05);">
+                    <div class="text-center">
+                        <i class="fas fa-clock fa-2x text-secondary mb-3"></i>
+                        <h5 class="fw-bold mb-2" style="color: var(--dark-gray);">Tender Closed</h5>
+                        <p class="text-secondary mb-0">
+                            This tender closed on @Model.ClosingDate.ToString("dd MMMM yyyy") and is no longer accepting submissions.
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Contact -->
+            <div class="tender-section">
+                <h5 class="tender-section-title">
+                    <i class="fas fa-address-card"></i>
+                    Contact Details
+                </h5>
+                @if (!string.IsNullOrEmpty(Model.ContactPerson))
+                {
+                    <div class="contact-card mb-3">
+                        <div class="contact-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="tender-detail-meta-label">Contact Person</div>
+                            <div class="fw-bold" style="color: var(--dark-gray);">@Model.ContactPerson</div>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.ContactEmail))
+                {
+                    <div class="contact-card mb-3">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <div class="tender-detail-meta-label">Email</div>
+                            <a href="mailto:@Model.ContactEmail" style="color: var(--primary-green); text-decoration: none; font-weight: 600;">
+                                @Model.ContactEmail
+                            </a>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.ContactPhone))
+                {
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <div class="tender-detail-meta-label">Phone</div>
+                            <a href="tel:@Model.ContactPhone" style="color: var(--primary-green); text-decoration: none; font-weight: 600;">
+                                @Model.ContactPhone
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Timeline -->
+            <div class="tender-section">
+                <h5 class="tender-section-title">
+                    <i class="fas fa-clock"></i>
+                    Timeline
+                </h5>
+                <div class="tender-timeline">
+                    <div class="tender-timeline-item">
+                        <div class="tender-timeline-marker"></div>
+                        <div class="tender-detail-meta-label">Published</div>
+                        <div class="fw-bold" style="color: var(--dark-gray);">@Model.PublishedDate.ToString("dd MMM yyyy")</div>
+                    </div>
+                    <div class="tender-timeline-item">
+                        <div class="tender-timeline-marker"></div>
+                        <div class="tender-detail-meta-label">Closing Date</div>
+                        <div class="fw-bold @(Model.DaysRemaining <= 7 && Model.IsOpen ? "text-danger" : "")">
+                            @Model.ClosingDate.ToString("dd MMM yyyy HH:mm")
+                        </div>
+                        @if (Model.IsOpen)
+                        {
+                            <small class="text-secondary">@Model.DaysRemaining days remaining</small>
+                        }
+                    </div>
+                    @if (Model.Status == "Closed" || Model.Status == "Awarded")
+                    {
+                        <div class="tender-timeline-item">
+                            <div class="tender-timeline-marker" style="border-color: var(--mustard);"></div>
+                            <div class="tender-detail-meta-label">Status</div>
+                            <div class="fw-bold">@Model.Status</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Related Tenders -->
+            @if (ViewBag.RelatedTenders != null && ((IEnumerable<Tender>)ViewBag.RelatedTenders).Any())
+            {
+                <div class="tender-section">
+                    <h5 class="tender-section-title">
+                        <i class="fas fa-link"></i>
+                        Related Tenders
+                    </h5>
+                    @foreach (var related in ViewBag.RelatedTenders)
+                    {
+                        <div class="related-tender-item">
+                            <div class="related-tender-number">
+                                <i class="fas fa-hashtag" style="color: var(--primary-green);"></i> @related.TenderNumber
+                            </div>
+                            <div class="related-tender-title">
+                                <a href="@Url.Action("Details", new { id = related.Id })">@related.Title</a>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="tender-status tender-status-sm @(related.Status == "Open" ? "tender-status-open" : "tender-status-closed")"
+                                      style="padding: 0.25rem 0.75rem; font-size: 0.75rem;">
+                                    @related.Status
+                                </span>
+                                <small class="text-secondary">
+                                    <i class="fas fa-calendar-alt me-1"></i>@related.ClosingDate.ToString("dd MMM")
+                                </small>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

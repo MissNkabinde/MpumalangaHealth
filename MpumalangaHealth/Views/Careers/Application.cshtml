@@ -1,0 +1,151 @@
+﻿@model JobVacancy
+@{
+    ViewData["Title"] = "Apply for " + Model.Title;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Progress Bar -->
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-muted">Step 1 of 2</small>
+                    <small class="text-muted">Job Application</small>
+                </div>
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-primary" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <!-- Application Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-6 text-primary mb-2">Apply for Position</h1>
+                <h2 class="h4 text-muted">@Model.Title</h2>
+                <p class="text-muted">Reference: @Model.ReferenceNumber</p>
+            </div>
+
+            <!-- Application Form -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-user-circle me-2"></i>Personal Information
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" asp-action="SubmitApplication" enctype="multipart/form-data">
+                        <input type="hidden" name="jobId" value="@Model.Id" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="idNumber" class="form-label">ID Number *</label>
+                            <input type="text" class="form-control" id="idNumber" name="idNumber" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="coverLetter" class="form-label">Cover Letter *</label>
+                            <textarea class="form-control" id="coverLetter" name="coverLetter" rows="4"
+                                      placeholder="Tell us why you're interested in this position and why you'd be a good fit..." required></textarea>
+                        </div>
+
+                        <!-- File Uploads -->
+                        <div class="mb-4">
+                            <h6 class="mb-3">Required Documents *</h6>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="cv" class="form-label">Curriculum Vitae (CV)</label>
+                                    <input type="file" class="form-control" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+                                    <small class="form-text text-muted">PDF or Word document, max 5MB</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="qualifications" class="form-label">Certified Qualifications</label>
+                                    <input type="file" class="form-control" id="qualifications" name="qualifications" accept=".pdf" required>
+                                    <small class="form-text text-muted">PDF only, max 10MB</small>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="idDocument" class="form-label">Certified ID Copy</label>
+                                    <input type="file" class="form-control" id="idDocument" name="idDocument" accept=".pdf,.jpg,.jpeg,.png" required>
+                                    <small class="form-text text-muted">PDF or image, max 5MB</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="registration" class="form-label">Professional Registration</label>
+                                    <input type="file" class="form-control" id="registration" name="registration" accept=".pdf,.jpg,.jpeg,.png">
+                                    <small class="form-text text-muted">If applicable</small>
+                                </div>
+
+                             <div class="row">
+                                <div class="col-md-6 mb-3">
+                                        <label for="Z83" class="form-label">Completed Z83</label>
+                                        <input type="file" class="form-control" id="Z83" name="Z83" accept=".pdf,.jpg,.jpeg,.png" required>
+                                        <small class="form-text text-muted">PDF or image, max 5MB</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="OTHER" class="form-label">Other Documents</label>
+                                        <input type="file" class="form-control" id="other" name="other" accept=".pdf,.jpg,.jpeg,.png">
+                                        <small class="form-text text-muted">If applicable</small>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <!-- Consent -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
+                            <label class="form-check-label" for="consent">
+                                I confirm that the information provided is true and correct. I understand that false information may disqualify my application.
+                            </label>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Details", new { id = Model.Id })" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Job
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Application
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Application Tips -->
+            <div class="card bg-light mt-4">
+                <div class="card-body">
+                    <h6 class="card-title text-primary">
+                        <i class="fas fa-lightbulb me-2"></i>Application Tips
+                    </h6>
+                    <ul class="small mb-0">
+                        <li>Ensure all documents are certified where required</li>
+                        <li>Your CV should be up-to-date and comprehensive</li>
+                        <li>Tailor your cover letter to this specific position</li>
+                        <li>Submit your application well before the closing date</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

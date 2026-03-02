@@ -1,0 +1,189 @@
+﻿@model List<District>
+@{
+    ViewData["Title"] = "Our Districts";
+}
+
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "About")">About Us</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Our Districts</li>
+        </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-primary mb-3">Our Districts</h1>
+            <p class="lead text-muted">Healthcare services delivered across three dedicated districts</p>
+        </div>
+    </div>
+
+    <!-- Districts Overview -->
+    <div class="row mb-5">
+        @foreach (var district in Model)
+        {
+            <div class="col-lg-4 mb-4">
+                <div class="card district-card h-100 shadow-sm">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h5 class="card-title mb-0 text-center">@district.Name</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- District Stats -->
+                        <div class="text-center mb-3">
+                            <div class="district-stats bg-light rounded p-3">
+                                <h3 class="text-primary mb-1">@district.FacilitiesCount</h3>
+                                <small class="text-muted">Healthcare Facilities</small>
+                            </div>
+                        </div>
+
+                        <!-- District Description -->
+                        <p class="text-muted mb-3">@district.Description</p>
+
+                        <!-- District Manager -->
+                        <div class="mb-3">
+                            <h6 class="text-primary">
+                                <i class="fas fa-user-tie me-2"></i>District Manager
+                            </h6>
+                            <p class="small text-muted mb-1">@district.Manager</p>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="contact-info">
+                            <h6 class="text-primary mb-2">
+                                <i class="fas fa-address-card me-2"></i>Contact Information
+                            </h6>
+                            <div class="small text-muted">
+                                <p class="mb-1">
+                                    <i class="fas fa-phone me-2"></i>@district.Contact
+                                </p>
+                                <p class="mb-1">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    <a href="mailto:@district.Email" class="text-muted">@district.Email</a>
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fas fa-map-marker-alt me-2"></i>@district.Address
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <a href="@Url.Action("Index", "Facilities")" class="btn btn-primary btn-sm w-100">
+                            <i class="fas fa-hospital me-1"></i>View Facilities
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Provincial Map Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h4 class="text-primary mb-0">
+                        <i class="fas fa-map me-2"></i>Provincial Health Districts Map
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    <!-- Map Placeholder -->
+                    <div class="map-placeholder bg-primary text-white text-center py-5">
+                        <i class="fas fa-map fa-4x mb-3"></i>
+                        <h4>Mpumalanga Health Districts</h4>
+                        <p class="mb-0">Interactive map showing healthcare facilities across all districts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- District Comparison -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h4 class="text-primary mb-4 text-center">District Health Services Overview</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>District</th>
+                                    <th>Hospitals</th>
+                                    <th>Clinics</th>
+                                    <th>Community Health Centers</th>
+                                    <th>Mobile Units</th>
+                                    <th>Total Facilities</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Ehlanzeni</strong></td>
+                                    <td>8</td>
+                                    <td>72</td>
+                                    <td>5</td>
+                                    <td>2</td>
+                                    <td>87</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gert Sibande</strong></td>
+                                    <td>6</td>
+                                    <td>54</td>
+                                    <td>3</td>
+                                    <td>2</td>
+                                    <td>65</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Nkangala</strong></td>
+                                    <td>7</td>
+                                    <td>60</td>
+                                    <td>3</td>
+                                    <td>2</td>
+                                    <td>72</td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td><strong>Provincial Total</strong></td>
+                                    <td>21</td>
+                                    <td>186</td>
+                                    <td>11</td>
+                                    <td>6</td>
+                                    <td>224</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .district-card {
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .district-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+        }
+
+    .district-stats {
+        border: 2px solid var(--primary-blue);
+    }
+
+    .map-placeholder {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, #00358a 100%) !important;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .table th {
+        font-weight: 600;
+    }
+</style>

@@ -1,0 +1,164 @@
+﻿@model List<ServiceCategory>
+@{
+    ViewData["Title"] = "Our Services - Mpumalanga Department of Health";
+}
+
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-primary mb-3">Our Healthcare Services</h1>
+            <p class="lead text-muted">Comprehensive healthcare services for all residents of Mpumalanga</p>
+        </div>
+    </div>
+
+    <!-- Emergency Services Banner -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                    <div class="flex-grow-1">
+                        <h5 class="alert-heading mb-1">Emergency Services Available 24/7</h5>
+                        <p class="mb-0">For life-threatening emergencies, call <strong>10177</strong> or visit your nearest hospital emergency department immediately.</p>
+                    </div>
+                    <a href="@Url.Action("Emergency")" class="btn btn-danger">Emergency Info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Categories Grid -->
+    <div class="row g-4">
+        @foreach (var category in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="card service-category-card h-100 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="category-icon mb-4">
+                            <i class="@category.Icon fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title text-primary mb-3">@category.Name</h4>
+                        <p class="card-text text-muted mb-4">@category.Description</p>
+                        <div class="service-count mb-3">
+                            <span class="badge bg-warning text-dark">@category.ServiceCount Services</span>
+                        </div>
+                        <a href="@Url.Action("Category", new { category = category.Name })" class="btn btn-primary">
+                            Explore Services <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Quick Access Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body p-4">
+                    <h3 class="text-primary text-center mb-4">Quick Access to Essential Services</h3>
+                    <div class="row g-3">
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("Category", new { category = "Primary Health Care" })" class="text-decoration-none">
+                                <div class="quick-service p-3">
+                                    <i class="fas fa-clinic-medical fa-2x text-primary mb-2"></i>
+                                    <h6 class="text-primary">Find a Clinic</h6>
+                                    <small class="text-muted">Locate nearest facility</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("Programs")" class="text-decoration-none">
+                                <div class="quick-service p-3">
+                                    <i class="fas fa-list-alt fa-2x text-primary mb-2"></i>
+                                    <h6 class="text-primary">Health Programs</h6>
+                                    <small class="text-muted">Specialized initiatives</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("Emergency")" class="text-decoration-none">
+                                <div class="quick-service p-3">
+                                    <i class="fas fa-ambulance fa-2x text-primary mb-2"></i>
+                                    <h6 class="text-primary">Emergency Info</h6>
+                                    <small class="text-muted">24/7 emergency care</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("Category", new { category = "Maternal & Child Health" })" class="text-decoration-none">
+                                <div class="quick-service p-3">
+                                    <i class="fas fa-baby fa-2x text-primary mb-2"></i>
+                                    <h6 class="text-primary">Mother & Child</h6>
+                                    <small class="text-muted">Maternity and pediatric care</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Statistics -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body py-4">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <h3 class="display-6 fw-bold mb-1">200+</h3>
+                            <small>Healthcare Facilities</small>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h3 class="display-6 fw-bold mb-1">36</h3>
+                            <small>Different Services</small>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h3 class="display-6 fw-bold mb-1">24/7</h3>
+                            <small>Emergency Coverage</small>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h3 class="display-6 fw-bold mb-1">4.5M+</h3>
+                            <small>Patients Served Annually</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .service-category-card {
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .service-category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+            border: 2px solid var(--primary-blue);
+        }
+
+    .category-icon {
+        transition: transform 0.3s ease;
+    }
+
+    .service-category-card:hover .category-icon {
+        transform: scale(1.1);
+    }
+
+    .quick-service {
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        border-radius: 8px;
+    }
+
+        .quick-service:hover {
+            border-color: var(--primary-blue);
+            background-color: rgba(1, 71, 171, 0.05);
+            transform: translateY(-2px);
+        }
+</style>

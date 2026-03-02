@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "About Us - Mpumalanga Department of Health";
+}
+
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-primary mb-3">About Us</h1>
+            <p class="lead text-muted">Learn about our mission, leadership, and commitment to healthcare in Mpumalanga</p>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body p-4">
+                    <h4 class="text-primary mb-4 text-center">Explore Our Department</h4>
+                    <div class="row g-4">
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("VisionMission")" class="text-decoration-none">
+                                <div class="about-card p-4 rounded">
+                                    <i class="fas fa-bullseye fa-3x text-primary mb-3"></i>
+                                    <h5 class="text-primary">Vision & Mission</h5>
+                                    <p class="text-muted small">Our purpose and direction</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("Management")" class="text-decoration-none">
+                                <div class="about-card p-4 rounded">
+                                    <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                                    <h5 class="text-primary">Management Team</h5>
+                                    <p class="text-muted small">Our leadership</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("Districts")" class="text-decoration-none">
+                                <div class="about-card p-4 rounded">
+                                    <i class="fas fa-map-marked-alt fa-3x text-primary mb-3"></i>
+                                    <h5 class="text-primary">Our Districts</h5>
+                                    <p class="text-muted small">Regional operations</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <a href="@Url.Action("Structure")" class="text-decoration-none">
+                                <div class="about-card p-4 rounded">
+                                    <i class="fas fa-sitemap fa-3x text-primary mb-3"></i>
+                                    <h5 class="text-primary">Organizational Structure</h5>
+                                    <p class="text-muted small">Department framework</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Department Overview -->
+    <div class="row mb-5">
+        <div class="col-lg-6">
+            <h2 class="text-primary mb-4">Our Commitment to Healthcare</h2>
+            <p class="lead text-muted">
+                The Mpumalanga Department of Health is dedicated to providing comprehensive,
+                quality healthcare services to all residents of our beautiful province.
+            </p>
+            <p>
+                With over 200 healthcare facilities spread across three districts, we serve
+                a population of more than 4.5 million people. Our dedicated team of healthcare
+                professionals works tirelessly to ensure that every citizen has access to the
+                medical care they need, when they need it.
+            </p>
+            <p>
+                From preventive care in our clinics to specialized treatment in our hospitals,
+                we are committed to improving health outcomes and enhancing the quality of life
+                for all communities in Mpumalanga.
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <div class="card bg-primary text-white">
+                <div class="card-body p-4 text-center">
+                    <i class="fas fa-heartbeat fa-4x mb-4"></i>
+                    <h3 class="mb-3">By The Numbers</h3>
+                    <div class="row text-center">
+                        <div class="col-6 mb-3">
+                            <h2 class="display-6 fw-bold">224</h2>
+                            <small>Healthcare Facilities</small>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h2 class="display-6 fw-bold">15,000+</h2>
+                            <small>Healthcare Workers</small>
+                        </div>
+                        <div class="col-6">
+                            <h2 class="display-6 fw-bold">3</h2>
+                            <small>Health Districts</small>
+                        </div>
+                        <div class="col-6">
+                            <h2 class="display-6 fw-bold">4.5M+</h2>
+                            <small>People Served</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Focus Areas -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-primary text-center mb-5">Our Strategic Focus Areas</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-shield-alt fa-2x text-primary mb-3"></i>
+                            <h5 class="text-primary">Quality Care</h5>
+                            <p class="text-muted">Ensuring high standards of clinical care and patient safety across all facilities.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-hand-holding-heart fa-2x text-primary mb-3"></i>
+                            <h5 class="text-primary">Access & Equity</h5>
+                            <p class="text-muted">Making healthcare accessible to all communities, especially underserved areas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-chart-line fa-2x text-primary mb-3"></i>
+                            <h5 class="text-primary">Health Outcomes</h5>
+                            <p class="text-muted">Focusing on measurable improvements in public health indicators.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .about-card {
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+        .about-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+</style>

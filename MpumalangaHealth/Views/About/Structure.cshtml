@@ -1,0 +1,272 @@
+﻿@{
+    ViewData["Title"] = "Organizational Structure";
+}
+
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "About")">About Us</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Organizational Structure</li>
+        </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-primary mb-3">Organizational Structure</h1>
+            <p class="lead text-muted">Understanding our departmental framework and reporting lines</p>
+        </div>
+    </div>
+
+    <!-- Organizational Chart -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h4 class="text-primary mb-0">
+                        <i class="fas fa-sitemap me-2"></i>Departmental Structure Chart
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Simplified Organizational Chart -->
+                    <div class="org-chart">
+                        <!-- Level 1: HOD -->
+                        <div class="org-level text-center mb-4">
+                            <div class="org-node bg-primary text-white mx-auto">
+                                <h5 class="mb-1">Head of Department</h5>
+                                <small>Dr. M. P. Nkabinde</small>
+                            </div>
+                        </div>
+
+                        <!-- Level 2: Chief Directors -->
+                        <div class="org-level">
+                            <div class="row justify-content-center">
+                                <div class="col-md-2 mb-3">
+                                    <div class="org-node bg-warning text-dark">
+                                        <h6 class="mb-1">CFO</h6>
+                                        <small>Finance & Admin</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <div class="org-node bg-warning text-dark">
+                                        <h6 class="mb-1">Clinical Services</h6>
+                                        <small>Chief Director</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <div class="org-node bg-warning text-dark">
+                                        <h6 class="mb-1">Primary Health</h6>
+                                        <small>Chief Director</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <div class="org-node bg-warning text-dark">
+                                        <h6 class="mb-1">Hospital Services</h6>
+                                        <small>Chief Director</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <div class="org-node bg-warning text-dark">
+                                        <h6 class="mb-1">Health Programs</h6>
+                                        <small>Chief Director</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Level 3: Directors -->
+                        <div class="org-level mt-4">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3">
+                                            <div class="org-node bg-info text-dark">
+                                                <small>District Health</small>
+                                                <small>Services</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="org-node bg-info text-dark">
+                                                <small>Pharmacy</small>
+                                                <small>Services</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="org-node bg-info text-dark">
+                                                <small>Emergency</small>
+                                                <small>Services</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="org-node bg-info text-dark">
+                                                <small>Quality</small>
+                                                <small>Assurance</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Departmental Units -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-stethoscope me-2"></i>Clinical Services
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Medical Services</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Nursing Services</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Allied Health Services</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Emergency Medical Services</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Clinical Governance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-clinic-medical me-2"></i>Primary Health Care
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Community Health Services</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>School Health Services</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Occupational Health</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Environmental Health</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Health Promotion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-hospital me-2"></i>Hospital Services
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Regional Hospitals</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>District Hospitals</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Specialized Hospitals</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Hospital Management</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Support Services</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-line me-2"></i>Health Programs
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>HIV & AIDS Programs</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>TB Control Program</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Maternal & Child Health</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Chronic Diseases</li>
+                        <li><i class="fas fa-caret-right text-primary me-2"></i>Mental Health Services</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Services -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h4 class="text-primary mb-3">
+                        <i class="fas fa-cogs me-2"></i>Corporate Support Services
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>Administration</h6>
+                            <ul class="small text-muted">
+                                <li>Human Resources</li>
+                                <li>Finance Management</li>
+                                <li>Supply Chain Management</li>
+                                <li>Legal Services</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Technical Support</h6>
+                            <ul class="small text-muted">
+                                <li>Information Technology</li>
+                                <li>Infrastructure Development</li>
+                                <li>Maintenance Services</li>
+                                <li>Transport & Logistics</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Strategic Support</h6>
+                            <ul class="small text-muted">
+                                <li>Planning & Monitoring</li>
+                                <li>Research & Development</li>
+                                <li>Communication Services</li>
+                                <li>Stakeholder Relations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .org-chart {
+        position: relative;
+    }
+
+    .org-level {
+        position: relative;
+    }
+
+    .org-node {
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+        .org-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .org-node h5, .org-node h6 {
+            margin: 0;
+        }
+
+    /* Connecting lines */
+    .org-level:not(:first-child)::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        width: 2px;
+        height: 20px;
+        background-color: var(--primary-blue);
+        transform: translateX(-50%);
+    }
+</style>

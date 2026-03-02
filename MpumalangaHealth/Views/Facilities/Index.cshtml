@@ -1,0 +1,133 @@
+﻿@model List<MpumalangaHealth.Controllers.Facility>
+@{
+    ViewData["Title"] = "Find Health Facilities";
+}
+
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold text-primary mb-3">Find Health Facilities</h1>
+            <p class="lead text-muted">Locate hospitals and clinics across Mpumalanga province</p>
+
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-lg" placeholder="Search by facility name or location..." id="searchInput">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select form-select-lg" id="districtFilter">
+                <option value="">All Districts</option>
+                <option value="Ehlanzeni">Ehlanzeni</option>
+                <option value="Gert Sibande">Gert Sibande</option>
+                <option value="Nkangala">Nkangala</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Facilities Grid -->
+    <div class="row" id="facilitiesGrid">
+        @foreach (var facility in Model)
+        {
+            <div class="col-lg-6 mb-4 facility-card" data-district="@facility.District">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title text-primary mb-0">@facility.Name</h5>
+                            <span class="badge @(facility.Type == "Hospital" ? "bg-primary" : "bg-warning text-dark")">
+                                @facility.Type
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark">
+                                <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                                @facility.District District
+                            </span>
+                        </div>
+
+                        <div class="facility-info">
+                            <p class="mb-2">
+                                <i class="fas fa-phone text-muted me-2"></i>
+                                <strong>@facility.Phone</strong>
+                            </p>
+                            <p class="mb-3 text-muted">
+                                <i class="fas fa-map-pin text-muted me-2"></i>
+                                @facility.Address
+                            </p>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-directions me-1"></i> Get Directions
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-info-circle me-1"></i> More Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- No Results Message (Hidden by default) -->
+    <div class="row d-none" id="noResults">
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h4 class="text-muted">No facilities found</h4>
+            <p class="text-muted">Try adjusting your search criteria</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Simple search and filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const districtFilter = document.getElementById('districtFilter');
+            const facilityCards = document.querySelectorAll('.facility-card');
+            const noResults = document.getElementById('noResults');
+
+            function filterFacilities() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedDistrict = districtFilter.value;
+                let visibleCount = 0;
+
+                facilityCards.forEach(card => {
+                    const facilityName = card.querySelector('.card-title').textContent.toLowerCase();
+                    const facilityDistrict = card.getAttribute('data-district');
+
+                    const matchesSearch = facilityName.includes(searchTerm);
+                    const matchesDistrict = !selectedDistrict || facilityDistrict === selectedDistrict;
+
+                    if (matchesSearch && matchesDistrict) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Show/hide no results message
+                if (visibleCount === 0) {
+                    noResults.classList.remove('d-none');
+                } else {
+                    noResults.classList.add('d-none');
+                }
+            }
+
+            searchInput.addEventListener('input', filterFacilities);
+            districtFilter.addEventListener('change', filterFacilities);
+        });
+    </script>
+}
