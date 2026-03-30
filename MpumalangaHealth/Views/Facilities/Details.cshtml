@@ -1,0 +1,199 @@
+﻿@model MpumalangaHealth.Controllers.Facility
+@{
+    ViewData["Title"] = $"{Model.Name} - Hospital Details";
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Facilities" asp-action="Index">Hospitals</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <div class="hospital-detail-card">
+                <div class="hospital-detail-header">
+                    <div class="hospital-detail-type">
+                        <span class="badge bg-primary" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                            <i class="fas fa-building me-1"></i> Hospital
+                        </span>
+                        <span class="badge bg-light text-dark ms-2">
+                            <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                            @Model.District District
+                        </span>
+                    </div>
+                    <h1 class="hospital-detail-title">@Model.Name</h1>
+                </div>
+
+                <div class="hospital-detail-section">
+                    <h3><i class="fas fa-info-circle text-primary me-2"></i> Contact Information</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="contact-info-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <div>
+                                    <strong>Phone</strong>
+                                    <div><a href="tel:@Model.Phone">@Model.Phone</a></div>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <i class="fas fa-ambulance"></i>
+                                <div>
+                                    <strong>Emergency Contact</strong>
+                                    <div><a href="tel:@Model.EmergencyContact">@Model.EmergencyContact</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="contact-info-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email</strong>
+                                    <div><a href="mailto:@Model.Email">@Model.Email</a></div>
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.Website))
+                            {
+                                <div class="contact-info-item">
+                                    <i class="fas fa-globe"></i>
+                                    <div>
+                                        <strong>Website</strong>
+                                        <div><a href="https://@Model.Website" target="_blank">@Model.Website</a></div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hospital-detail-section">
+                    <h3><i class="fas fa-map-pin text-primary me-2"></i> Location</h3>
+                    <p><strong>Address:</strong> @Model.Address</p>
+                    @if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+                    {
+                        <div class="hospital-map-container mt-3">
+                            <iframe width="100%"
+                                    height="300"
+                                    frameborder="0"
+                                    style="border:0; border-radius: 12px;"
+                                    src="https://www.openstreetmap.org/export/embed.html?bbox=@(Model.Longitude.Value - 0.01),@(Model.Latitude.Value - 0.01),@(Model.Longitude.Value + 0.01),@(Model.Latitude.Value + 0.01)&layer=mapnik&marker=@Model.Latitude.Value,@Model.Longitude.Value"
+                                    allowfullscreen>
+                            </iframe>
+                            <div class="text-center mt-2">
+                                <a href="https://maps.google.com/?q=@Model.Latitude,@Model.Longitude"
+                                   target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-directions me-1"></i> Get Directions
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="hospital-detail-section">
+                    <h3><i class="fas fa-clock text-primary me-2"></i> Operating Hours</h3>
+                    <p><strong>Visiting Hours:</strong> @Model.VisitingHours</p>
+                    <p><strong>Operating Hours:</strong> @Model.OperatingHours</p>
+                </div>
+
+                @if (Model.Specialties.Any())
+                {
+                    <div class="hospital-detail-section">
+                        <h3><i class="fas fa-star-of-life text-primary me-2"></i> Specialties</h3>
+                        <div class="specialties-list">
+                            @foreach (var specialty in Model.Specialties)
+                            {
+                                <span class="specialty-tag">@specialty</span>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Beds > 0)
+                {
+                    <div class="hospital-detail-section">
+                        <h3><i class="fas fa-bed text-primary me-2"></i> Capacity</h3>
+                        <p><strong>Bed Capacity:</strong> @Model.Beds beds</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Emergency Info -->
+            <div class="sidebar-card emergency-card">
+                <h4><i class="fas fa-ambulance text-danger me-2"></i> Emergency</h4>
+                <p>For medical emergencies, contact:</p>
+                <div class="emergency-number">
+                    <i class="fas fa-phone-alt"></i>
+                    <strong>@Model.EmergencyContact</strong>
+                </div>
+                <hr>
+                <p class="mb-0 small text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    For life-threatening emergencies, call 10177 or 112 from a cellphone
+                </p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="sidebar-card">
+                <h4><i class="fas fa-bolt text-primary me-2"></i> Quick Actions</h4>
+                <div class="d-grid gap-2">
+                    <a href="tel:@Model.Phone" class="btn btn-success">
+                        <i class="fas fa-phone-alt me-2"></i> Call Now
+                    </a>
+                    <button class="btn btn-outline-primary" onclick="copyPhoneNumber('@Model.Phone')">
+                        <i class="fas fa-copy me-2"></i> Copy Phone Number
+                    </button>
+                    @if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+                    {
+                        <a href="https://maps.google.com/?q=@Model.Latitude,@Model.Longitude"
+                           target="_blank" class="btn btn-outline-secondary">
+                            <i class="fas fa-directions me-2"></i> Get Directions
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <!-- Nearby Hospitals -->
+            @if (ViewBag.NearbyHospitals != null && ((List<MpumalangaHealth.Controllers.Facility>)ViewBag.NearbyHospitals).Any())
+            {
+                <div class="sidebar-card">
+                    <h4><i class="fas fa-location-dot text-primary me-2"></i> Nearby Hospitals</h4>
+                    @foreach (var nearby in ViewBag.NearbyHospitals)
+                    {
+                        <div class="nearby-hospital">
+                            <i class="fas fa-building"></i>
+                            <div>
+                                <a asp-action="Details" asp-route-id="@nearby.Id" class="fw-bold">@nearby.Name</a>
+                                <div class="small text-muted">@nearby.District District</div>
+                                <div class="small text-muted">@nearby.Phone</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function copyPhoneNumber(phone) {
+            navigator.clipboard.writeText(phone).then(function() {
+                var notification = document.createElement('div');
+                notification.className = 'toast-notification';
+                notification.innerHTML = '<i class="fas fa-check-circle"></i> Phone number copied!';
+                document.body.appendChild(notification);
+
+                setTimeout(function() {
+                    notification.remove();
+                }, 2000);
+            });
+        }
+    </script>
+}

@@ -1,0 +1,137 @@
+﻿@model List<MpumalangaHealth.Controllers.Facility>
+@{
+    ViewData["Title"] = "Facilities Map - Mpumalanga Department of Health";
+}
+
+<div class="container-fluid px-0">
+    <div class="facilities-hero" style="padding: 2rem 0;">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="facilities-hero-title">
+                        Health Facilities <span>Map</span>
+                    </h1>
+                    <p class="facilities-hero-text">
+                        Interactive map showing all hospitals and clinics across Mpumalanga province
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-0">
+        <div class="col-lg-8">
+            <div id="facilitiesMap" style="height: 70vh; width: 100%;"></div>
+        </div>
+        <div class="col-lg-4">
+            <div class="facilities-list-sidebar">
+                <h4 class="mb-3">
+                    <i class="fas fa-list text-primary me-2"></i>
+                    Facilities (@Model.Count)
+                </h4>
+                <div class="facilities-list-scroll">
+                    @foreach (var facility in Model.OrderBy(f => f.District).ThenBy(f => f.Name))
+                    {
+                        <div class="map-facility-item" data-lat="@facility.Latitude" data-lng="@facility.Longitude" data-name="@facility.Name">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">@facility.Name</h6>
+                                    <div class="small text-muted">
+                                        <i class="fas fa-map-marker-alt me-1"></i> @facility.District
+                                    </div>
+                                    <div class="small text-muted">
+                                        <i class="fas fa-phone me-1"></i> @facility.Phone
+                                    </div>
+                                </div>
+                                <span class="badge @(facility.Type == "Hospital" ? "bg-primary" : "bg-warning")">
+                                    @facility.Type
+                                </span>
+                            </div>
+                            <a asp-action="Details" asp-route-id="@facility.Id" class="btn btn-sm btn-outline-primary mt-2">
+                                View Details <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize map
+        var map = L.map('facilitiesMap').setView([-26.0, 30.0], 8);
+
+        // Add tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Define icons
+        var hospitalIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: '<div style="background-color: #006400; border-radius: 50%; width: 12px; height: 12px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+            iconSize: [12, 12],
+            popupAnchor: [0, -6]
+        });
+
+        var clinicIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: '<div style="background-color: #FFD166; border-radius: 50%; width: 12px; height: 12px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+            iconSize: [12, 12],
+            popupAnchor: [0, -6]
+        });
+
+        // Add markers
+        var markers = [];
+        @foreach (var facility in Model.Where(f => f.Latitude.HasValue && f.Longitude.HasValue))
+        {
+                <text>
+                    var marker = L.marker([@facility.Latitude, @facility.Longitude], {
+                        icon: '@facility.Type' == 'Hospital' ? hospitalIcon : clinicIcon
+                    }).addTo(map);
+
+                    marker.bindPopup(`
+                        <div class="map-popup">
+                            <h6 class="mb-1">@facility.Name</h6>
+                            <div class="small text-muted mb-2">@facility.District District</div>
+                            <div class="mb-2">
+                                <i class="fas fa-phone me-1"></i> @facility.Phone<br>
+                                <i class="fas fa-map-pin me-1"></i> @facility.Address
+                            </div>
+                            <a href="/Facilities/Details/@facility.Id" class="btn btn-sm btn-primary">View Details</a>
+                            <a href="https://maps.google.com/?q=@facility.Latitude,@facility.Longitude" target="_blank" class="btn btn-sm btn-outline-secondary">Directions</a>
+                        </div>
+                    `);
+
+                    markers.push(marker);
+                </text>
+        }
+
+        // Zoom to facility when clicking on sidebar item
+        document.querySelectorAll('.map-facility-item').forEach(item => {
+            item.addEventListener('click', function() {
+                var lat = parseFloat(this.dataset.lat);
+                var lng = parseFloat(this.dataset.lng);
+                if (lat && lng) {
+                    map.setView([lat, lng], 15);
+                }
+            });
+        });
+    </script>
+    <style>
+        .map-popup {
+            min-width: 200px;
+        }
+
+        .custom-div-icon {
+            background: transparent;
+            border: none;
+        }
+    </style>
+}

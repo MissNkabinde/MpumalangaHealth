@@ -1,133 +1,186 @@
 ﻿@model List<MpumalangaHealth.Controllers.Facility>
 @{
-    ViewData["Title"] = "Find Health Facilities";
+    ViewData["Title"] = "Hospitals - Mpumalanga Department of Health";
+    var currentSearch = ViewBag.CurrentSearch as string ?? "";
+    var currentDistrict = ViewBag.CurrentDistrict as string ?? "";
 }
 
 <div class="container py-5">
     <!-- Page Header -->
     <div class="row mb-5">
-        <div class="col-12">
-            <h1 class="display-5 fw-bold text-primary mb-3">Find Health Facilities</h1>
-            <p class="lead text-muted">Locate hospitals and clinics across Mpumalanga province</p>
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-primary mb-3">Hospitals in Mpumalanga</h1>
+            <p class="lead text-muted">Find hospitals and their contact information across the province</p>
+        </div>
+    </div>
 
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="stats-card">
+                <div class="stats-number">@ViewBag.TotalHospitals</div>
+                <div class="stats-label">Hospitals</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stats-card">
+                <div class="stats-number">3</div>
+                <div class="stats-label">Districts</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stats-card">
+                <div class="stats-number">24/7</div>
+                <div class="stats-label">Emergency Services</div>
+            </div>
         </div>
     </div>
 
     <!-- Search and Filter Section -->
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <div class="input-group">
-                <input type="text" class="form-control form-control-lg" placeholder="Search by facility name or location..." id="searchInput">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search"></i> Search
-                </button>
+    <div class="filter-section mb-4">
+        <form method="get" action="@Url.Action("Index")" id="filterForm">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" name="search" class="search-input"
+                               placeholder="Search by hospital name or address..."
+                               value="@currentSearch">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select name="district" class="filter-select" onchange="this.form.submit()">
+                        <option value="">All Districts</option>
+                        <option value="Ehlanzeni" selected="@(currentDistrict == "Ehlanzeni")">Ehlanzeni</option>
+                        <option value="Gert Sibande" selected="@(currentDistrict == "Gert Sibande")">Gert Sibande</option>
+                        <option value="Nkangala" selected="@(currentDistrict == "Nkangala")">Nkangala</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary w-100">Clear</a>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <select class="form-select form-select-lg" id="districtFilter">
-                <option value="">All Districts</option>
-                <option value="Ehlanzeni">Ehlanzeni</option>
-                <option value="Gert Sibande">Gert Sibande</option>
-                <option value="Nkangala">Nkangala</option>
-            </select>
-        </div>
+        </form>
     </div>
 
-    <!-- Facilities Grid -->
-    <div class="row" id="facilitiesGrid">
-        @foreach (var facility in Model)
-        {
-            <div class="col-lg-6 mb-4 facility-card" data-district="@facility.District">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <h5 class="card-title text-primary mb-0">@facility.Name</h5>
-                            <span class="badge @(facility.Type == "Hospital" ? "bg-primary" : "bg-warning text-dark")">
-                                @facility.Type
-                            </span>
+    <!-- Quick Filter Chips -->
+    <div class="filter-chips mb-4">
+        <span class="filter-label">Quick filters:</span>
+        <a href="@Url.Action("Index", new { district = "Ehlanzeni", search = currentSearch })"
+           class="filter-chip @(currentDistrict == "Ehlanzeni" ? "active" : "")">
+            <i class="fas fa-map-pin"></i> Ehlanzeni
+        </a>
+        <a href="@Url.Action("Index", new { district = "Gert Sibande", search = currentSearch })"
+           class="filter-chip @(currentDistrict == "Gert Sibande" ? "active" : "")">
+            <i class="fas fa-map-pin"></i> Gert Sibande
+        </a>
+        <a href="@Url.Action("Index", new { district = "Nkangala", search = currentSearch })"
+           class="filter-chip @(currentDistrict == "Nkangala" ? "active" : "")">
+            <i class="fas fa-map-pin"></i> Nkangala
+        </a>
+    </div>
+
+    <!-- Hospitals Grid -->
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var hospital in Model)
+            {
+                <div class="col-lg-6 mb-4">
+                    <div class="hospital-card">
+                        <div class="hospital-card-header">
+                            <div class="hospital-type-badge bg-primary">
+                                <i class="fas fa-building me-1"></i> Hospital
+                            </div>
+                            <div class="hospital-district">
+                                <i class="fas fa-map-marker-alt"></i> @hospital.District
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <span class="badge bg-light text-dark">
-                                <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                                @facility.District District
-                            </span>
+                        <h3 class="hospital-card-title">
+                            <a asp-action="Details" asp-route-id="@hospital.Id">@hospital.Name</a>
+                        </h3>
+
+                        <div class="hospital-info">
+                            <div class="info-row">
+                                <i class="fas fa-phone-alt"></i>
+                                <span><strong>Phone:</strong> @hospital.Phone</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-map-pin"></i>
+                                <span><strong>Address:</strong> @hospital.Address</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-clock"></i>
+                                <span><strong>Hours:</strong> @hospital.OperatingHours</span>
+                            </div>
                         </div>
 
-                        <div class="facility-info">
-                            <p class="mb-2">
-                                <i class="fas fa-phone text-muted me-2"></i>
-                                <strong>@facility.Phone</strong>
-                            </p>
-                            <p class="mb-3 text-muted">
-                                <i class="fas fa-map-pin text-muted me-2"></i>
-                                @facility.Address
-                            </p>
-                        </div>
+                        @if (hospital.Specialties.Any())
+                        {
+                            <div class="hospital-specialties">
+                                <strong><i class="fas fa-stethoscope"></i> Specialties:</strong>
+                                @foreach (var specialty in hospital.Specialties.Take(3))
+                                {
+                                    <span class="specialty-tag">@specialty</span>
+                                }
+                                @if (hospital.Specialties.Count > 3)
+                                {
+                                    <span class="specialty-tag">+@(hospital.Specialties.Count - 3) more</span>
+                                }
+                            </div>
+                        }
 
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary btn-sm">
-                                <i class="fas fa-directions me-1"></i> Get Directions
-                            </button>
-                            <button class="btn btn-outline-secondary btn-sm">
-                                <i class="fas fa-info-circle me-1"></i> More Info
+                        <div class="hospital-card-actions">
+                            <a asp-action="Details" asp-route-id="@hospital.Id" class="btn btn-primary">
+                                <i class="fas fa-info-circle me-1"></i> View Details
+                            </a>
+                            @if (hospital.Latitude.HasValue && hospital.Longitude.HasValue)
+                            {
+                                <a href="https://maps.google.com/?q=@hospital.Latitude,@hospital.Longitude"
+                                   target="_blank" class="btn btn-outline-secondary">
+                                    <i class="fas fa-directions me-1"></i> Directions
+                                </a>
+                            }
+                            <button class="btn btn-outline-primary" onclick="copyPhoneNumber('@hospital.Phone')">
+                                <i class="fas fa-copy"></i>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-
-    <!-- No Results Message (Hidden by default) -->
-    <div class="row d-none" id="noResults">
-        <div class="col-12 text-center py-5">
-            <i class="fas fa-search fa-3x text-muted mb-3"></i>
-            <h4 class="text-muted">No facilities found</h4>
-            <p class="text-muted">Try adjusting your search criteria</p>
+            }
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="fas fa-hospital-user fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">No hospitals found</h4>
+            <p class="text-muted">Try adjusting your search criteria</p>
+            <a href="@Url.Action("Index")" class="btn btn-primary">Clear All Filters</a>
+        </div>
+    }
 </div>
 
 @section Scripts {
     <script>
-        // Simple search and filter functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const districtFilter = document.getElementById('districtFilter');
-            const facilityCards = document.querySelectorAll('.facility-card');
-            const noResults = document.getElementById('noResults');
+        function copyPhoneNumber(phone) {
+            navigator.clipboard.writeText(phone).then(function() {
+                var notification = document.createElement('div');
+                notification.className = 'toast-notification';
+                notification.innerHTML = '<i class="fas fa-check-circle"></i> Phone number copied!';
+                document.body.appendChild(notification);
 
-            function filterFacilities() {
-                const searchTerm = searchInput.value.toLowerCase();
-                const selectedDistrict = districtFilter.value;
-                let visibleCount = 0;
+                setTimeout(function() {
+                    notification.remove();
+                }, 2000);
+            });
+        }
 
-                facilityCards.forEach(card => {
-                    const facilityName = card.querySelector('.card-title').textContent.toLowerCase();
-                    const facilityDistrict = card.getAttribute('data-district');
-
-                    const matchesSearch = facilityName.includes(searchTerm);
-                    const matchesDistrict = !selectedDistrict || facilityDistrict === selectedDistrict;
-
-                    if (matchesSearch && matchesDistrict) {
-                        card.style.display = 'block';
-                        visibleCount++;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                // Show/hide no results message
-                if (visibleCount === 0) {
-                    noResults.classList.remove('d-none');
-                } else {
-                    noResults.classList.add('d-none');
-                }
-            }
-
-            searchInput.addEventListener('input', filterFacilities);
-            districtFilter.addEventListener('change', filterFacilities);
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', function() {
+                document.getElementById('filterForm').submit();
+            });
         });
     </script>
 }

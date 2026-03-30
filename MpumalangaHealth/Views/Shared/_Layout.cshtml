@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Top Header Strip (Green) -->
     <div class="top-header bg-primary py-2">
@@ -20,6 +20,24 @@
                     </small>
                 </div>
                 <div class="col-md-6 text-md-end">
+                    <!-- Social Icons in Top Bar -->
+                    <div class="top-bar-social me-3 d-inline-block">
+                        <a href="https://youtube.com/@@mpumalanga-health?si=kBrJAiVZEdR_5uPb" target="_blank" class="text-white me-2" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.facebook.com/MPUHEALTH?mibextid=wwXIfr" target="_blank" class="text-white me-2" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/@@mpumalanga_health?igsh=MThrOXlsNjZtd2pyOA==" target="_blank" class="text-white me-2" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@@mpumalanga.health?_r=1&_t=ZS-94XYB9XTAXZ" target="_blank" class="text-white" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://x.com/mpuhealth1?s=21" target="_blank" class="text-white" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
                     <small class="text-white">
                         <i class="fas fa-envelope me-1"></i> info@mpuhealth.gov.za
                     </small>
@@ -28,13 +46,36 @@
         </div>
     </div>
 
+    <!-- Floating Social Media Sidebar -->
+    <div class="floating-social-sidebar">
+        <a href="https://youtube.com/@@mpumalanga-health?si=kBrJAiVZEdR_5uPb" target="_blank" class="social-icon youtube" title="Follow us on YouTube">
+            <i class="fab fa-youtube"></i>
+            <span class="social-label">YouTube</span>
+        </a>
+        <a href="https://www.facebook.com/MPUHEALTH?mibextid=wwXIfr" target="_blank" class="social-icon facebook" title="Follow us on Facebook">
+            <i class="fab fa-facebook-f"></i>
+            <span class="social-label">Facebook</span>
+        </a>
+        <a href="https://www.instagram.com/@@mpumalanga_health?igsh=MThrOXlsNjZtd2pyOA==" target="_blank" class="social-icon instagram" title="Follow us on Instagram">
+            <i class="fab fa-instagram"></i>
+            <span class="social-label">Instagram</span>
+        </a>
+        <a href="https://www.tiktok.com/@@mpumalanga.health?_r=1&_t=ZS-94XYB9XTAXZ" target="_blank" class="social-icon tiktok" title="Follow us on TikTok">
+            <i class="fab fa-tiktok"></i>
+            <span class="social-label">TikTok</span>
+        </a>
+        <a href="https://x.com/mpuhealth1?s=21" target="_blank" class="social-icon twitter" title="Follow us on Twitter">
+            <i class="fab fa-twitter"></i>
+            <span class="social-label">Twitter</span>
+        </a>
+    </div>
+
     <!-- Main Header with Logo and Sunrise -->
     <header class="main-header bg-white">
         <div class="container">
             <div class="row align-items-center py-3">
-                <!-- Logo and Text Section - Now with more space for logo -->
+                <!-- Logo and Text Section -->
                 <div class="col-md-8">
-                    <!-- Increased from col-md-6 to col-md-8 -->
                     <div class="main-logo">
                         <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                             <div class="d-flex align-items-center">
@@ -43,7 +84,6 @@
                                 </div>
                                 <!-- Text moved to the right with margin-left -->
                                 <div class="text-start ms-5">
-                                    <!-- ms-5 = margin-left large -->
                                     <div class="h5 text-dark fw-bold mb-0">MPUMALANGA DEPARTMENT OF HEALTH</div>
                                     <div class="small text-muted mt-1">www.mpuhealth.gov.za</div>
                                 </div>
@@ -52,9 +92,8 @@
                     </div>
                 </div>
 
-                <!-- Sunrise Image - Right Side (smaller column) -->
+                <!-- Sunrise Image - Right Side -->
                 <div class="col-md-4 text-md-end">
-                    <!-- Decreased from col-md-6 to col-md-4 -->
                     <div class="sunrise-container">
                         <img src="~/images/sunrise.png" alt="Mpumalanga Sunrise" class="sunrise-img">
                     </div>
@@ -88,7 +127,6 @@
                             <li><a class="dropdown-item" asp-controller="About" asp-action="Districts">Our Districts</a></li>
                             <li><a class="dropdown-item" asp-controller="About" asp-action="Structure">Organizational Structure</a></li>
                             <li><hr class="dropdown-divider"></li>
-
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -106,20 +144,9 @@
                             <li><a class="dropdown-item" asp-controller="Services" asp-action="Emergency">Emergency Info</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-dark fw-bold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            FACILITIES
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-controller="Facilities" asp-action="Index">Find Facilities</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Provincial Office</a></li>
-                            <li><a class="dropdown-item" href="#">Ehlanzeni District</a></li>
-                            <li><a class="dropdown-item" href="#">Gert Sibande District</a></li>
-                            <li><a class="dropdown-item" href="#">Nkangala District</a></li>
-                        </ul>
-                    </li>
-                    <!-- In your main site's navigation -->
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-bold" asp-controller="Facilities" asp-action="Index">FACILITIES</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark fw-bold" asp-controller="News" asp-action="Index">NEWS</a>
@@ -146,7 +173,6 @@
             </div>
         </div>
     </nav>
-    </header>
 
     <!-- Main Content -->
     <main>
@@ -193,6 +219,31 @@
                         <h6 class="mb-2"><i class="fas fa-ambulance me-2"></i>EMERGENCY SERVICES</h6>
                         <p class="mb-1">Ambulance: 10177</p>
                         <p class="mb-0">Cellphone Emergency: 112</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Footer Section -->
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h5 class="text-warning mb-3">FOLLOW US</h5>
+                    <div class="footer-social-links">
+                        <a href="https://youtube.com/@@mpumalanga-health?si=kBrJAiVZEdR_5uPb" target="_blank" class="btn btn-outline-warning btn-social mx-1">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.facebook.com/MPUHEALTH?mibextid=wwXIfr" target="_blank" class="btn btn-outline-warning btn-social mx-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/@@mpumalanga_health?igsh=MThrOXlsNjZtd2pyOA==" target="_blank" class="btn btn-outline-warning btn-social mx-1">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@@mpumalanga.health?_r=1&_t=ZS-94XYB9XTAXZ" target="_blank" class="btn btn-outline-warning btn-social mx-1">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://x.com/mpuhealth1?s=21" target="_blank" class="btn btn-outline-warning btn-social mx-1">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        
                     </div>
                 </div>
             </div>
